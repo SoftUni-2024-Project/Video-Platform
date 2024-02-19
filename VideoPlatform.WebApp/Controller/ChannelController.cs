@@ -1,16 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using static VideoPlatform.WebApp.Model.User.ChannelRequestModel;
 using VideoPlatform.WebApp.Model.User;
-using VideoPlatform.WebApp.Service;
+using VideoPlatform.WebApp.Repos;
 
 namespace VideoPlatform.WebApp.Controler
 {
     public class ChannelController : Controller
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
 
         private readonly IChannelService _channelService;
 
@@ -19,15 +15,14 @@ namespace VideoPlatform.WebApp.Controler
             _channelService = channelService;
         }
 
-        // GET: Channel/Create
         [HttpGet]
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Channel/Create
         [HttpPost]
+        [Route("register")]
         public ActionResult Create(CreateChannelRequestModel request)
         {
             if (ModelState.IsValid)
@@ -37,7 +32,6 @@ namespace VideoPlatform.WebApp.Controler
             return View(request);
         }
 
-        // GET: Channel/Edit/{id}
         [HttpGet]
         public ActionResult Edit(int id)
         {
@@ -54,8 +48,8 @@ namespace VideoPlatform.WebApp.Controler
             throw new NotImplementedException();
         }
 
-        // POST: Channel/Edit/{id}
         [HttpPost]
+        [Route("editChannel")]
         public ActionResult Edit(EditChannelRequestModel request)
         {
             if (ModelState.IsValid)
@@ -66,7 +60,6 @@ namespace VideoPlatform.WebApp.Controler
             return View(request);
         }
 
-        // GET: Channel/Details/{id}
         [HttpGet]
         public ActionResult Details(int id)
         {
@@ -76,6 +69,11 @@ namespace VideoPlatform.WebApp.Controler
                 return HttpNotFound();
             }
             return View(channel);
+        }
+
+        public IActionResult Index()
+        {
+            return View();
         }
     }
 }
