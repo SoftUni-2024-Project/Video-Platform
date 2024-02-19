@@ -36,7 +36,6 @@ namespace VideoPlatform.WebApp.Controler
             return View(model);
         }*/
 
-
         [HttpPost]
         [Route("register")]
         public ActionResult Create(CreateChannelRequestModel request)
