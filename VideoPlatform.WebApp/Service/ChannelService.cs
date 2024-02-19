@@ -1,16 +1,15 @@
 ﻿using static VideoPlatform.WebApp.Model.User.ChannelRequestModel;
 using VideoPlatform.WebApp.Model.User;
-using VideoPlatform.WebApp.Repos;
 using VideoPlatform.WebApp.Data;
 
 namespace VideoPlatform.WebApp.Service
 {
     public class ChannelService : IChannelService
     {
-        private readonly ApplicationDbContext _DbContext;
+        private readonly ApplicationDbContext _context;
         public ChannelService(ApplicationDbContext DBContext)
         {
-            _DbContext = DBContext;
+            _context = DBContext;
         }
         private static List<ChannelResponseModel> _channels = new List<ChannelResponseModel>();
 
