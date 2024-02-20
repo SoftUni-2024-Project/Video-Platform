@@ -10,8 +10,8 @@
             public string Password { get; set; }
             public string Description { get; set; }
             public PrivacyOption Privacy { get; set; }
-            public string Email { get; set; } // Added email field
-            public bool SendConfirmationEmail { get; set; } // Added option to send confirmation email
+            public string Email { get; set; } 
+            public bool SendConfirmationEmail { get; set; } 
             public byte[] CoverImage { get; set; }
         }
 

@@ -28,6 +28,7 @@ namespace VideoPlatform.WebApp.Data
         public DbSet<CommentReaction> CommentReactions {get; set; }
 
         public DbSet<Notification> Notifications {get; set; }
+        public DbSet<Channel> Channels { get; set; }    
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
     }

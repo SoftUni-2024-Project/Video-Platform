@@ -1,19 +1,24 @@
 ﻿using static VideoPlatform.WebApp.Model.User.ChannelRequestModel;
 using VideoPlatform.WebApp.Model.User;
-using VideoPlatform.WebApp.Data;
+using VideoPlatform.WebApp.Data.Repositories;
+using VideoPlatform.WebApp.Repos;
 
 namespace VideoPlatform.WebApp.Service
 {
     public class ChannelService : IChannelService
     {
-        private readonly ApplicationDbContext _context;
-        public ChannelService(ApplicationDbContext DBContext)
+        private readonly IVideoRepository _videoRepository;
+        private readonly IChannelRepository _channelRepository;
+
+        public ChannelService(IVideoRepository videoRepository, IChannelRepository channelRepository)
         {
-            _context = DBContext;
+            _videoRepository = videoRepository;
+            _channelRepository = channelRepository;
         }
+
         private static List<ChannelResponseModel> _channels = new List<ChannelResponseModel>();
 
-        public ChannelResponseModel CreateChannel(CreateChannelRequestModel request) //suzdavame kanal i go dobavqme
+        public ChannelResponseModel CreateChannel(CreateChannelRequestModel request)
             {
                 ChannelResponseModel newChannel = new ChannelResponseModel
                 {
@@ -36,8 +41,8 @@ namespace VideoPlatform.WebApp.Service
                 return newChannel;
             }
 
-            public ChannelResponseModel EditChannel(EditChannelRequestModel request)
-            {
+        public ChannelResponseModel EditChannel(EditChannelRequestModel request)
+        {
                 ChannelResponseModel channel = _channels.Find(c => c.ChannelId == request.ChannelId);
                 if (channel != null)
                 {
@@ -47,11 +52,29 @@ namespace VideoPlatform.WebApp.Service
                     channel.UpdatedAt = DateTime.Now;
                 }
                 return channel;
+        }
+
+        public ChannelResponseModel GetChannelByUsername(string username) => _channels.Find(c => c.Username == username);
+
+        public ChannelResponseModel DeleteChannel(Guid channelId)
+        {
+            var channel = _channelRepository.GetChannelById(channelId);
+            if (channel == null)
+            {
+                throw new InvalidOperationException("Channel not found");
             }
 
-            public ChannelResponseModel GetChannelById(int id)
+            var videos = _videoRepository.GetVideosByChannelId(channelId);
+            if (videos.Any())
             {
-                return _channels.Find(c => c.ChannelId == id);
+                throw new InvalidOperationException("Cannot delete channel with associated videos");
             }
+
+            _channelRepository.Delete(channelId);
+            throw new InvalidOperationException("Channel deleted");
+        }
+
+        public ChannelResponseModel GetChannelById(int channelId)
+         => _channels.Find(c => c.ChannelId == channelId);
     }
 }

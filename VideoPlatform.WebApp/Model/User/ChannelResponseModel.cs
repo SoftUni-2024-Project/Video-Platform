@@ -9,6 +9,7 @@
             public string CoverImageUrl { get; set; }
             public DateTime CreatedAt { get; set; }
             public DateTime UpdatedAt { get; set; }
+            public string Password { get; internal set; }
     }
 
         public enum PrivacyOption
