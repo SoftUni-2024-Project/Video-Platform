@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using VideoPlatform.WebApp.Data;
+using VideoPlatform.WebApp.Data.Entities;
+using VideoPlatform.WebApp.Data.Repositories;
+using VideoPlatform.WebApp.Repos;
 using VideoPlatform.WebApp.Service;
 using VideoPlatform.WebApp.Services;
 
@@ -12,12 +15,13 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<Channel>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 // Add MVC services
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddScoped<IChannelRepository, ChannelRepository>();
+builder.Services.AddScoped<IVideoRepository, VideoRepository>();
 // Register your services
 builder.Services.AddScoped<IChannelService, ChannelService>();
 builder.Services.AddScoped<IVideoService, VideoService>();

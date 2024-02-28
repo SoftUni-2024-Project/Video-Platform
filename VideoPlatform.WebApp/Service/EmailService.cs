@@ -8,10 +8,14 @@ namespace VideoPlatform.WebApp.Services
     {
         private readonly EmailConfiguration _emailConfig;
 
-        public EmailService(EmailConfiguration emailConfig)
+        public EmailService()
+        {
+            this._emailConfig = null;
+        }
+        /*public EmailService(EmailConfiguration emailConfig)
         {
             this._emailConfig = emailConfig;
-        }
+        }*/
 
         public void SendEmail(Message message)
         {
