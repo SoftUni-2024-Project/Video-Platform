@@ -2,7 +2,6 @@
 using VideoPlatform.WebApp.Data.Repositories;
 using VideoPlatform.WebApp.Repos;
 using Microsoft.AspNetCore.Identity;
-using VideoPlatform.WebApp.Model.AccountModel;
 
 namespace VideoPlatform.WebApp.Service
 {

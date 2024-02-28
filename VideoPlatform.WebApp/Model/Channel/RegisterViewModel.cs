@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace VideoPlatform.WebApp.Model.AccountModel
+namespace VideoPlatform.WebApp.Model.User
 {
     public class RegisterViewModel
     {

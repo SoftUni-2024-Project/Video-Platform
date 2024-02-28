@@ -1,5 +1,4 @@
-﻿@model VideoPlatform.WebApp.Model.Channel.RegisterViewModel
-
+﻿@model VideoPlatform.WebApp.Model.User.RegisterViewModel
 <h2>Register</h2>
 
 @using (Html.BeginForm("Register", "Channel"))
@@ -19,9 +18,9 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.ConfirmPassword)
-        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+        @Html.LabelFor(m => m.PasswordRepeat)
+        @Html.PasswordFor(m => m.PasswordRepeat, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.PasswordRepeat, "", new { @class = "text-danger" })
     </div>
 
     <button type="submit" class="btn btn-primary">Register</button>

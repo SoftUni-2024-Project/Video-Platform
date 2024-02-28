@@ -7,12 +7,12 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using VideoPlatform.WebApp.Data.Entities;
 using VideoPlatform.WebApp.Data;
-using VideoPlatform.WebApp.Model.AccountModel;
 using VideoPlatform.WebApp.Services;
 
-namespace VideoPlatform.WebApp.Controler
+
+namespace VideoPlatform.WebApp.Controllers
 {
-    public class ChannelController : ControllerBase
+    public class ChannelController : Controller
     {
         private readonly UserManager<IdentityUser> userManager;
         private readonly SignInManager<IdentityUser> signInManager;
@@ -158,3 +158,4 @@ namespace VideoPlatform.WebApp.Controler
         }
     }
 }
+

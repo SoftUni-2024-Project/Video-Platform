@@ -1,6 +1,5 @@
 ﻿using VideoPlatform.WebApp.Model.User;
 using Microsoft.AspNetCore.Identity;
-using VideoPlatform.WebApp.Model.AccountModel;
 
 namespace VideoPlatform.WebApp.Service
 {
