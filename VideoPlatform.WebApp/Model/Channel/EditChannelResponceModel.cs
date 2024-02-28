@@ -1,6 +1,6 @@
 ﻿namespace VideoPlatform.WebApp.Model.User
 {
-    public class ChannelResponseModel
+    public class EditChannelResponceModel
     {
             public int ChannelId { get; set; }
             public string Username { get; set; }

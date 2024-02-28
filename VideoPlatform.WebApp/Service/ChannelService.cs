@@ -1,7 +1,7 @@
-﻿using static VideoPlatform.WebApp.Model.User.ChannelRequestModel;
-using VideoPlatform.WebApp.Model.User;
+﻿using VideoPlatform.WebApp.Model.User;
 using VideoPlatform.WebApp.Data.Repositories;
 using VideoPlatform.WebApp.Repos;
+using Microsoft.AspNetCore.Identity;
 
 namespace VideoPlatform.WebApp.Service
 {
@@ -16,47 +16,34 @@ namespace VideoPlatform.WebApp.Service
             _channelRepository = channelRepository;
         }
 
-        private static List<ChannelResponseModel> _channels = new List<ChannelResponseModel>();
+        private static List<EditChannelResponceModel> _channels = new List<EditChannelResponceModel>();
 
-        public ChannelResponseModel CreateChannel(CreateChannelRequestModel request)
-            {
-                ChannelResponseModel newChannel = new ChannelResponseModel
-                {
-                    ChannelId = _channels.Count + 1,
-                    Username = request.Username,
-                    Description = request.Description,
-                    Privacy = request.Privacy,
-                    CoverImageUrl = "",
-                    CreatedAt = DateTime.Now,
-                    UpdatedAt = DateTime.Now
-                };
-                _channels.Add(newChannel);
-
-                
-                if (request.SendConfirmationEmail) //confirm email
-                {
-                    
-                }
-
-                return newChannel;
-            }
-
-        public ChannelResponseModel EditChannel(EditChannelRequestModel request)
+        public Task<IdentityResult> CreateUserAsync(RegisterViewModel model)
         {
-                ChannelResponseModel channel = _channels.Find(c => c.ChannelId == request.ChannelId);
-                if (channel != null)
-                {
-                    channel.Description = request.Description;
-                    channel.Privacy = request.Privacy;
-                    // for some reason ne mi dava da sloja coverImage kato neshto koeto moje da se promenq
-                    channel.UpdatedAt = DateTime.Now;
-                }
-                return channel;
+            throw new NotImplementedException();
         }
 
-        public ChannelResponseModel GetChannelByUsername(string username) => _channels.Find(c => c.Username == username);
+        public Task<bool> ConfirmEmailAsync(string email, string token)
+        {
+            throw new NotImplementedException();
+        }
 
-        public ChannelResponseModel DeleteChannel(Guid channelId)
+        public EditChannelResponceModel EditChannel(EditChannelRequestModel request)
+        {
+            EditChannelResponceModel channel = _channels.Find(c => c.ChannelId == request.ChannelId);
+            if (channel != null)
+            {
+                channel.Username = request.Username;
+                channel.Password = request.Password;    
+                channel.Description = request.Description;
+                //channel.Privacy = request.Privacy;
+                channel.CoverImageUrl = request.CoverImage.ToString();
+                channel.UpdatedAt = DateTime.Now;
+            }
+            return channel;
+        }
+
+        public EditChannelResponceModel DeleteChannel(int channelId)
         {
             var channel = _channelRepository.GetChannelById(channelId);
             if (channel == null)
@@ -74,7 +61,10 @@ namespace VideoPlatform.WebApp.Service
             throw new InvalidOperationException("Channel deleted");
         }
 
-        public ChannelResponseModel GetChannelById(int channelId)
-         => _channels.Find(c => c.ChannelId == channelId);
+        public EditChannelResponceModel GetChannelByUsername(string username)
+        => _channels.Find(c => c.Username == username);
+
+        public EditChannelResponceModel GetChannelById(int channelId)
+            => _channels.Find(c => c.ChannelId == channelId);
     }
 }

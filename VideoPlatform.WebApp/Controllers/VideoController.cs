@@ -2,9 +2,9 @@
 using VideoPlatform.WebApp.Service;
 using VideoPlatform.WebApp.Model.Videos;
 
-namespace VideoPlatform.WebApp.Controller
+namespace VideoPlatform.WebApp.Controllers
 {
-    public class VideoController : ControllerBase
+    public class VideoController : Controller
     {
             private readonly IVideoService _videoService;
 

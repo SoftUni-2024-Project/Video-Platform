@@ -80,7 +80,7 @@ namespace VideoPlatform.WebApp.Service
                 Views = video.Views,
                 });
              }
-             IEnumerable<Video> IVideoService.GetVideosByChannelId(Guid channelId)
+             IEnumerable<Video> IVideoService.GetVideosByChannelId(int channelId)
              {
                 return _videoRepository.GetVideosByChannelId(channelId);
              }

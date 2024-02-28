@@ -11,6 +11,6 @@ namespace VideoPlatform.WebApp.Service
         void CreateVideo(VideoRequestModel videoRequest);
         void UpdateVideo(Guid videoId, VideoRequestModel videoRequest);
         void DeleteVideo(Guid videoId);
-        IEnumerable<Video> GetVideosByChannelId(Guid channelId);
+        IEnumerable<Video> GetVideosByChannelId(int channelId);
     }
 }
