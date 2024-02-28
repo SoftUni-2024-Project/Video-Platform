@@ -20,14 +20,14 @@ namespace VideoPlatform.WebApp.Controllers
                 if (video == null)
                     return NotFound();
 
-                return Ok(video);
+                return View(video);
             }
 
             [HttpGet]
             public IActionResult GetAllVideos()
             {
                 var videos = _videoService.GetAllVideos();
-                return Ok(videos);
+                return View(videos);
             }
 
             [HttpPost]
@@ -54,5 +54,4 @@ namespace VideoPlatform.WebApp.Controllers
                 return NoContent();
             }
     }
-
 }
