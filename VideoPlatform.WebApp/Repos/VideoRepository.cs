@@ -9,7 +9,7 @@ namespace VideoPlatform.WebApp.Data.Repositories
         void Create(Video video);
         void Update(Video video);
         void Delete(Video video);
-        public IEnumerable<Video> GetVideosByChannelId(Guid channelId);
+        public IEnumerable<Video> GetVideosByChannelId(int channelId);
     }
 
     public class VideoRepository : IVideoRepository
@@ -49,9 +49,9 @@ namespace VideoPlatform.WebApp.Data.Repositories
             _context.SaveChanges();
         }
 
-        public IEnumerable<Video> GetVideosByChannelId(Guid channelId)
+        public IEnumerable<Video> GetVideosByChannelId(int channelId)
         {
-            return _context.Videos.Where(v => v.ChannelId == channelId).ToList();
+            return _context.Videos.Where(v => v.ChannelId.Equals(channelId)).ToList();
         }
     }
 }

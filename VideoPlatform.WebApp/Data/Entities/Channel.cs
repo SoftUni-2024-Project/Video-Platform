@@ -15,5 +15,9 @@ namespace VideoPlatform.WebApp.Data.Entities
         public Guid RoleId { get; set; }
 
         public Role Role { get; set; }
+        public string? Username { get; internal set; }
+        public object Password { get; internal set; }
+
+        public int ChannelId { get; set; }
     }
 }

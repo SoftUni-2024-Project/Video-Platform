@@ -1,14 +1,16 @@
-﻿using static VideoPlatform.WebApp.Model.User.ChannelRequestModel;
-using VideoPlatform.WebApp.Model.User;
+﻿using VideoPlatform.WebApp.Model.User;
+using Microsoft.AspNetCore.Identity;
+using VideoPlatform.WebApp.Model.AccountModel;
 
 namespace VideoPlatform.WebApp.Service
 {
     public interface IChannelService
     {
-        ChannelResponseModel CreateChannel(CreateChannelRequestModel request);
-        ChannelResponseModel EditChannel(EditChannelRequestModel request);
-        ChannelResponseModel GetChannelByUsername(string username);
-        ChannelResponseModel GetChannelById(int channelId);
-        ChannelResponseModel DeleteChannel(Guid channelId);
+        Task<IdentityResult> CreateUserAsync(RegisterViewModel model);
+        Task<bool> ConfirmEmailAsync(string email, string token);
+        EditChannelResponceModel EditChannel(EditChannelRequestModel request);
+        EditChannelResponceModel DeleteChannel(int channelId);
+        EditChannelResponceModel GetChannelByUsername(string username);
+        EditChannelResponceModel GetChannelById(int channelId);
     }
 }

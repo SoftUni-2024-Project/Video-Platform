@@ -1,18 +1,21 @@
-﻿using VideoPlatform.WebApp.Data;
-using VideoPlatform.WebApp.Data.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using VideoPlatform.WebApp.Data;
+using Channel = VideoPlatform.WebApp.Data.Entities.Channel;
 
 namespace VideoPlatform.WebApp.Repos
 {
     public interface IChannelRepository
     {
-        Channel GetChannelById(Guid channelId);
+        Channel GetChannelByUsermane(Guid username);
+        Channel GetChannelById(int channelId);
         IEnumerable<Channel> GetAllChannels();
-        void Create(Channel channel);
-        void Update(Channel channel);
-        void Delete(Guid channelId);
+        void Register(Channel channel);
+        void Edit(Channel channel);
+        void Delete(int channelId);
     }
     public class ChannelRepository : IChannelRepository 
     {
+        private List<Channel> _channels= new List<Channel>();
         private readonly ApplicationDbContext _context;
 
         public ChannelRepository(ApplicationDbContext context)
@@ -20,13 +23,42 @@ namespace VideoPlatform.WebApp.Repos
             _context = context;
         }
 
-        public Channel GetChannelByUsername(Guid username)
+        public void Register(Channel channel)
         {
-            return _context.Channels.FirstOrDefault(c => c.Id == username);
+            if (channel == null)
+            {
+                throw new ArgumentNullException(nameof(channel), "User cannot be null.");
+            }
+            if (string.IsNullOrWhiteSpace(channel.Username))
+            {
+                throw new ArgumentException("Username cannot be empty or whitespace.", nameof(channel.Username));
+            }
+
+            if (string.IsNullOrWhiteSpace(channel.Email))
+            {
+                 throw new ArgumentException("Email cannot be empty or whitespace.", nameof(channel.Email));
+            }
+
+            if (channel.Password.ToString().Length < 8)
+            {
+                throw new ArgumentException("Password must be at least 8 characters long.", nameof(channel.Password));
+            }
+
+            _channels.Add(channel);
         }
-        public Channel GetChannelById(Guid channelId)
+        public void Edit(Channel channel)
         {
-            return _context.Channels.FirstOrDefault(c => c.Id == channelId);
+            _context.Channels.Update(channel);
+            _context.SaveChanges();
+        }
+        public void Delete(int channelId)
+        {
+            var channelToDelete = _context.Channels.FirstOrDefault(c => c.Id.Equals(channelId));
+            if (channelToDelete != null)
+            {
+                _context.Channels.Remove(channelToDelete);
+                _context.SaveChanges();
+            }
         }
 
         public IEnumerable<Channel> GetAllChannels()
@@ -34,26 +66,15 @@ namespace VideoPlatform.WebApp.Repos
             return _context.Channels.ToList();
         }
 
-        public void Create(Channel channel)
+        public Channel GetChannelByUsermane(Guid username)
         {
-            _context.Channels.Add(channel);
-            _context.SaveChanges();
+            return _context.Channels.FirstOrDefault(c => c.Id == username);
         }
 
-        public void Update(Channel channel)
+        public Channel GetChannelById(int channelId)
         {
-            _context.Channels.Update(channel);
-            _context.SaveChanges();
-        }
-
-        public void Delete(Guid channelId)
-        {
-            var channel = _context.Channels.Find(channelId);
-            if (channel != null)
-            {
-                _context.Channels.Remove(channel);
-                _context.SaveChanges();
-            }
+            Channel channel = _context.Channels.FirstOrDefault(c => c.Id.Equals(channelId));
+            return channel;
         }
 
     }
