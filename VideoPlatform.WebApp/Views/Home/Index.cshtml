@@ -1,2 +1,86 @@
-﻿<h1>Welcome to the Home Page</h1>
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuraFlix</title>
+    <style>
+        body {
+            font-family: serif;
+            background-color: white;
+            margin: 0;
+            padding: 0;
+        }
 
+        .navbar {
+            background-color: Crimson;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+            .navbar h1 {
+                color: white;
+                font-family: script;
+                margin: 0;
+                padding: 0;
+                display: inline-block;
+            }
+
+            .navbar .nav-buttons {
+                float: right;
+            }
+
+        .button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-family: serif;
+            font-size: 16px;
+            text-decoration: none;
+            color: Crimson;
+            background-color: Crimson;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 20px;
+        }
+
+            .gallery .video {
+                margin-bottom: 20px;
+                padding: 10px;
+                border: 1px solid #ccc;
+                width: calc(25% - 20px);
+                box-sizing: border-box;
+            }
+
+                .gallery .video img {
+                    max-width: 100%;
+                    height: auto;
+                }
+
+                .gallery .video .title {
+                    margin-top: 10px;
+                    color: black;
+                    font-weight: bold;
+                }
+
+                .gallery .video .channel {
+                    color: black;
+                }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h1>AuraFlix</h1>
+        <div class="nav-buttons">
+            <button onclick="window.location.href='/Channel/Register'">Register</button>
+            <button onclick="location.href='/login'">Log In</button>
+        </div>
+    </div>
+</body>
+</html>
