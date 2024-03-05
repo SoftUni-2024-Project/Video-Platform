@@ -1,4 +1,5 @@
-﻿using VideoPlatform.WebApp.Data.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using VideoPlatform.WebApp.Data.Entities;
 using VideoPlatform.WebApp.Data.Repositories;
 using VideoPlatform.WebApp.Model.Videos;
 
@@ -41,31 +42,63 @@ namespace VideoPlatform.WebApp.Service
                 _videoRepository.Update(existingVideo);
             }
 
-            public void DeleteVideo(Guid videoId)
+        public void LikeVideo(Guid videoId, Guid channelId, VideoReaction reaction)
+        {
+            if (!_videoRepository.Exists(videoId, channelId))
             {
+                _videoRepository.LikeVideo(reaction);
+            }
+            else
+            {
+                throw new ArgumentException("Already liked the video!");
+            }
+        }
+        public void DislikeVideo(Guid videoId, Guid channelId, VideoReaction reaction)
+        {
+            if (!_videoRepository.Exists(videoId, channelId))
+            {
+                _videoRepository.DislikeVideo(reaction);
+            }
+            else
+            {
+                throw new ArgumentException("Already disliked the video!");
+            }
+        }
+        public int GetLikeCount(Guid videoId)
+        {
+            return _videoRepository.GetLikeCount(videoId);
+        }
+
+        public int GetDislikeCount(Guid videoId)
+        {
+            return _videoRepository.GetDislikeCount(videoId);
+        }
+
+        public void DeleteVideo(Guid videoId)
+        {
                 var existingVideo = _videoRepository.GetVideoById(videoId);
                 if (existingVideo == null)
                     throw new Exception("Video not found");
 
                 _videoRepository.Delete(existingVideo);
-            }
+        }
 
-            VideoResponseModel IVideoService.GetVideo(Guid videoId)
-            {
+        VideoResponseModel IVideoService.GetVideo(Guid videoId)
+        {
                 var video = _videoRepository.GetVideoById(videoId);
                 if (video == null)
                     return null;
 
-            return new VideoResponseModel
-            {
+                return new VideoResponseModel
+                {
                 Id = video.Id,
                 Name = video.Name,
                 Description = video.Description,
                 ChannelId = video.ChannelId,
                 Privacy = video.Privacy,
                 Views = video.Views,
-            };
-            }
+                };
+        }
 
              IEnumerable<VideoResponseModel> IVideoService.GetAllVideos()
              {

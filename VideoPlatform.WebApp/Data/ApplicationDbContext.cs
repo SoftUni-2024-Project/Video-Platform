@@ -23,7 +23,7 @@ namespace VideoPlatform.WebApp.Data
 
         public DbSet<Comment> Comments {get; set; }
 
-        public DbSet<VideoReaction> VideoReactions {get; set; }
+        public DbSet<VideoReaction> Reactions {get; set; }
 
         public DbSet<CommentReaction> CommentReactions {get; set; }
 
