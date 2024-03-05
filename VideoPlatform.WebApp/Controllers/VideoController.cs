@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using VideoPlatform.WebApp.Service;
 using VideoPlatform.WebApp.Model.Videos;
+using VideoPlatform.WebApp.Data.Entities;
 
 namespace VideoPlatform.WebApp.Controllers
 {
@@ -45,8 +46,49 @@ namespace VideoPlatform.WebApp.Controllers
                 _videoService.UpdateVideo(videoId, videoRequest);
                 return NoContent();
             }
+        [HttpPost("like")]
+        public IActionResult LikeVideo(Guid videoId, Guid channelId, VideoReaction reaction)
+        {
+            try
+            {
+                _videoService.LikeVideo(videoId, channelId, reaction);
+                return Ok("Video liked successfully!");
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
-            [HttpDelete]
+        [HttpPost("dislike")]
+        public IActionResult DislikeVideo(Guid videoId, Guid channelId, VideoReaction reaction)
+        {
+            try
+            {
+                _videoService.DislikeVideo(videoId, channelId, reaction);
+                return Ok("Video disliked successfully!");
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("likeCount")]
+        public IActionResult GetLikeCount(Guid videoId)
+        {
+            var count = _videoService.GetLikeCount(videoId);
+            return Ok($"Like count for video with ID {videoId}: {count}");
+        }
+
+        [HttpGet("dislikeCount")]
+        public IActionResult GetDislikeCount(Guid videoId)
+        {
+            var count = _videoService.GetDislikeCount(videoId);
+            return Ok($"Dislike count for video with ID {videoId}: {count}");
+        }
+
+        [HttpDelete]
             [Route("delete")]
             public IActionResult DeleteVideo(Guid videoId)
             {

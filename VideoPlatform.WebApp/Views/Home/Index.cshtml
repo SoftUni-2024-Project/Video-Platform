@@ -78,8 +78,20 @@
     <div class="navbar">
         <h1>AuraFlix</h1>
         <div class="nav-buttons">
-            <button onclick="window.location.href='/Channel/Register'">Register</button>
-            <button onclick="location.href='/login'">Log In</button>
+            <button onclick="redirectToRegister()">Register</button>
+
+            <script>
+                function redirectToRegister() {
+                    window.location.href = '@Url.Action("Register", "Channel")';
+                }
+            </script>
+            <button onclick="redirectToLogIn()">Log In</button>
+
+            <script>
+                function redirectToRegister() {
+                    window.location.href = '@Url.Action("Log In", "Channel")';
+                }
+            </script>
         </div>
     </div>
 </body>

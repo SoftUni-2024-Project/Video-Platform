@@ -20,6 +20,6 @@ namespace VideoPlatform.WebApp.Data.Entities
         public Channel Channel { get; set; }
 
         // TODO: Трябва да го измислим това дали ще е стринг, или нещо друго
-        public string Reaction { get; set; }
+        public bool Reaction { get; set; }
     }
 }
