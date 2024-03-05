@@ -14,16 +14,16 @@ namespace VideoPlatform.WebApp.Controllers
 {
     public class ChannelController : Controller
     {
-        private readonly UserManager<IdentityUser> userManager;
-        private readonly SignInManager<IdentityUser> signInManager;
+        private readonly UserManager<Channel> userManager;
+        private readonly SignInManager<Channel> signInManager;
         private readonly ApplicationDbContext _context;
         private readonly IEmailService _emailService;
         private readonly IChannelService _channelService;
 
 
         public ChannelController(
-            UserManager<IdentityUser> _userManager,
-            SignInManager<IdentityUser> _signInManager,
+            UserManager<Channel> _userManager,
+            SignInManager<Channel> _signInManager,
             ApplicationDbContext context,
             IEmailService emailService, IChannelService channelService)
         {
@@ -51,7 +51,7 @@ namespace VideoPlatform.WebApp.Controllers
                 return View(model);
             }
 
-            var user = new IdentityUser()
+            var user = new Channel()
             {
                 Email = model.Email,
                 EmailConfirmed = true,
