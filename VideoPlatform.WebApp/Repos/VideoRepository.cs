@@ -4,7 +4,7 @@ namespace VideoPlatform.WebApp.Data.Repositories
 {
     public interface IVideoRepository
     {
-        Video GetVideoById(Guid videoId);
+        Video? GetVideoById(Guid videoId);
         IEnumerable<Video> GetAllVideos();
         void Create(Video video);
         void Update(Video video);
@@ -26,7 +26,7 @@ namespace VideoPlatform.WebApp.Data.Repositories
             _context = context;
         }
 
-        public Video GetVideoById(Guid videoId)
+        public Video? GetVideoById(Guid videoId)
         {
             return _context.Videos.FirstOrDefault(v => v.Id == videoId);
         }
