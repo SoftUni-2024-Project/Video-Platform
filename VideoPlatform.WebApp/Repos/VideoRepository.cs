@@ -8,6 +8,7 @@ namespace VideoPlatform.WebApp.Data.Repositories
         IEnumerable<Video> GetAllVideos();
         void Create(Video video);
         void Update(Video video);
+        List<Subscription> GetAllSubscriptions(Guid channelId);
         void Delete(Video video);
         void LikeVideo(VideoReaction reaction);
         void DislikeVideo(VideoReaction reaction);
@@ -25,7 +26,10 @@ namespace VideoPlatform.WebApp.Data.Repositories
         {
             _context = context;
         }
-
+        public List<Subscription> GetAllSubscriptions(Guid channelId)
+        {
+            return _context.Subscriptions.Where(x=> x.ChannelId == channelId).ToList();
+        }
         public Video? GetVideoById(Guid videoId)
         {
             return _context.Videos.FirstOrDefault(v => v.Id == videoId);

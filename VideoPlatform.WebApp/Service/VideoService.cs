@@ -1,17 +1,21 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.EntityFrameworkCore;
 using VideoPlatform.WebApp.Data.Entities;
 using VideoPlatform.WebApp.Data.Repositories;
 using VideoPlatform.WebApp.Model.Videos;
+using VideoPlatform.WebApp.Services;
 
 namespace VideoPlatform.WebApp.Service
 {
     public class VideoService : IVideoService
     {
             private readonly IVideoRepository _videoRepository;
+            private readonly IEmailService _emailService;
 
-            public VideoService(IVideoRepository videoRepository)
+            public VideoService(IVideoRepository videoRepository, IEmailService emailService)
             {
                 _videoRepository = videoRepository;
+                _emailService = emailService;
             }
 
             public void CreateVideo(VideoRequestModel videoRequest)
@@ -26,6 +30,7 @@ namespace VideoPlatform.WebApp.Service
                 };
 
                 _videoRepository.Create(video);
+                Notification(video.Id);
             }
 
             public void UpdateVideo(Guid videoId, VideoRequestModel videoRequest)
@@ -63,6 +68,17 @@ namespace VideoPlatform.WebApp.Service
             {
                 throw new ArgumentException("Already disliked the video!");
             }
+        }
+        public void Notification(Guid videoId)
+        {
+            Video video = _videoRepository.GetVideoById(videoId);
+            List<Subscription> subscriptions = _videoRepository.GetAllSubscriptions(video.ChannelId); 
+            foreach(var subscription in subscriptions)
+            {
+                var message = new Message((new string[] { subscription.Subscriber.Email! }).ToList(), "new video dropped", video.VideoUrl);
+                _emailService.SendEmail(message);
+            }
+            
         }
         public int GetLikeCount(Guid videoId)
         {

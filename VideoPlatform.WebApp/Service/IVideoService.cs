@@ -14,6 +14,7 @@ namespace VideoPlatform.WebApp.Service
         int GetLikeCount(Guid videoId);
         int GetDislikeCount(Guid videoId);
         void DeleteVideo(Guid videoId);
+        void Notification(Guid videoId);
         IEnumerable<Video> GetVideosByChannelId(int channelId);
     }
 }
