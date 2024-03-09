@@ -34,7 +34,7 @@ namespace VideoPlatform.WebApp.Controllers
             _channelService = channelService;
         }
 
-        [HttpGet]
+        [HttpGet("Register")]
         [AllowAnonymous]
         public IActionResult Register()
         {
@@ -128,16 +128,6 @@ namespace VideoPlatform.WebApp.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public IActionResult TestEmail()
-        {
-            _emailService.SendEmail(
-                new Message((new string[] { "kal04an@gmail.com" }).ToList(),
-                "Testing Email Service",
-                "Test Email"
-                 ));
-
-            return Redirect("/");
-        }
 
         [HttpGet("EmailVerification")]
         public async Task<IActionResult> EmailVerification(string token, string email)
