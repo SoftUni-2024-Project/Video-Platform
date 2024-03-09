@@ -8,6 +8,7 @@ namespace VideoPlatform.WebApp.Data.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
+        public string VideoUrl { get; set; }
 
         [StringLength(70, MinimumLength = 1, ErrorMessage = "Description must be between 1 and 70 characters long!")]
         public string Name { get; set; }
